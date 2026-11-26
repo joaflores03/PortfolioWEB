@@ -468,19 +468,56 @@
       box-shadow: 0 18px 50px rgba(0,0,0,0.3);
     }
     .project-thumb {
-      height: 170px;
-      display: grid;
-      place-items: center;
-      font-size: 2.6rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .project-thumb::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(10,10,18,0.8), transparent 60%);
-    }
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(167,139,250,0.18), rgba(34,211,238,0.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover .project-thumb img {
+  transform: scale(1.05);
+}
+
+/* Degradado suave abajo para integrar la imagen con el cuerpo de la tarjeta */
+.project-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,18,0.55), transparent 55%);
+  pointer-events: none;
+}
+
+/* Etiqueta opcional "ver demo" flotante sobre la imagen */
+.project-thumb .thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,18,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  z-index: 1;
+}
+.project-card:hover .project-thumb .thumb-overlay {
+  opacity: 1;
+}
     .project-body {
       padding: 22px 22px 24px;
       display: flex;
@@ -842,9 +879,10 @@ const projects = [
   {
     title: "Flora — Café de Especialidad",
     description: "Sitio web para una cafetería de especialidad y pastelería artesanal. Diseño enfocado en transmitir la identidad de marca: calidez, origen y detalle artesanal. Incluye secciones de historia, experiencia, galería y testimonios, con una navegación fluida y una estética cuidada que refleja el espíritu del local.",
-    category: "webdesign", // también podría ser "webdev"
+    category: "webdesign",
     tags: ["HTML", "CSS", "JavaScript", "Netlify"],
-    icon: "🌿",
+    image: "img/flora.png",   // 👈 captura del sitio
+    icon: "🌿",                // respaldo por si falta la imagen
     demo: "https://flora-a3h9.netlify.app/",
     repo: "https://github.com/joaflores03/Flora"
   },
@@ -853,12 +891,12 @@ const projects = [
     description: "Plataforma que analiza demos de CS2 (Premier y FACEIT) con IA. Subís tu archivo .dem, el motor extrae métricas tácticas (opening duels, trade%, KAST, utilidad) y te arma un plan de práctica de 30 minutos con drills concretos en mapas del taller. Sin servidores externos, gratuito y enfocado en el mercado latinoamericano.",
     category: "ia",
     tags: ["CS2", "IA", "awpy", "Python", "Análisis de datos"],
+    image: "img/clutchlab.png", // 👈 captura del sitio
     icon: "🎯",
     demo: "https://clutchlab.lat",
     repo: ""
   }
 ];
-
     /* ============================================================
        2. RENDERIZADO Y FILTRADO
        ============================================================ */
@@ -873,30 +911,42 @@ const projects = [
     };
 
     function renderProjects(filter = 'all') {
-      const filtered = filter === 'all'
-        ? projects
-        : projects.filter(p => p.category === filter);
+  const filtered = filter === 'all'
+    ? projects
+    : projects.filter(p => p.category === filter);
 
-      grid.innerHTML = filtered.map((p, i) => `
-        <article class="project-card" style="animation-delay:${i * 0.06}s">
-          <div class="project-thumb" style="background:linear-gradient(135deg, rgba(167,139,250,0.18), rgba(34,211,238,0.12));">
-            ${p.icon || '📁'}
+  grid.innerHTML = filtered.map((p, i) => {
+    // Si el proyecto tiene imagen, la mostramos; sino, cae al emoji
+    const thumbContent = p.image
+      ? `<img src="${p.image}" alt="Captura de ${p.title}" loading="lazy" />`
+      : (p.icon || '📁');
+
+    const overlay = p.demo
+      ? `<div class="thumb-overlay">Ver demo ↗</div>`
+      : '';
+
+    return `
+      <article class="project-card" style="animation-delay:${i * 0.06}s">
+        <div class="project-thumb">
+          ${thumbContent}
+          ${overlay}
+        </div>
+        <div class="project-body">
+          <div class="project-cat">${categoryNames[p.category] || p.category}</div>
+          <h3>${p.title}</h3>
+          <p>${p.description}</p>
+          <div class="project-meta">
+            ${(p.tags || []).map(t => `<span>${t}</span>`).join('')}
           </div>
-          <div class="project-body">
-            <div class="project-cat">${categoryNames[p.category] || p.category}</div>
-            <h3>${p.title}</h3>
-            <p>${p.description}</p>
-            <div class="project-meta">
-              ${(p.tags || []).map(t => `<span>${t}</span>`).join('')}
-            </div>
-            <div class="project-links">
-              ${p.demo ? `<a href="${p.demo}" target="_blank" rel="noopener">Demo ↗</a>` : ''}
-              ${p.repo ? `<a href="${p.repo}" target="_blank" rel="noopener">Código ↗</a>` : ''}
-            </div>
+          <div class="project-links">
+            ${p.demo ? `<a href="${p.demo}" target="_blank" rel="noopener">Demo ↗</a>` : ''}
+            ${p.repo ? `<a href="${p.repo}" target="_blank" rel="noopener">Código ↗</a>` : ''}
           </div>
-        </article>
-      `).join('');
-    }
+        </div>
+      </article>
+    `;
+  }).join('');
+}
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
