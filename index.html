@@ -839,61 +839,25 @@
        - icon: emoji o símbolo visual rápido
     */
     const projects = [
-      {
-        title: "Dashboard de Retención de Clientes",
-        description: "Modelo de churn con Python y visualización en Tableau. Identificamos los 3 segmentos con mayor riesgo y redujimos la tasa de abandono un 14% en 6 meses.",
-        category: "data",
-        tags: ["Python", "SQL", "Tableau", "Scikit-learn"],
-        icon: "📈",
-        demo: "#",
-        repo: "#"
-      },
-      {
-        title: "App Web de Gestión de Inventario",
-        description: "Next.js + Supabase para una PyME. CRUD en tiempo real, roles de usuario y reportes automáticos en PDF. Desplegada en Vercel con CI/CD.",
-        category: "webdev",
-        tags: ["Next.js", "Supabase", "Tailwind", "Vercel"],
-        icon: "⚙️",
-        demo: "#",
-        repo: "#"
-      },
-      {
-        title: "Rediseño UX de Plataforma Fintech",
-        description: "Auditoría heurística, research con usuarios y sistema de diseño en Figma. El nuevo onboarding aumentó la activación un 22% y redujo el abandono un 31%.",
-        category: "webdesign",
-        tags: ["Figma", "UX Research", "Design System", "Prototyping"],
-        icon: "🎯",
-        demo: "#",
-        repo: ""
-      },
-      {
-        title: "Asistente RAG para Documentación Técnica",
-        description: "Chatbot basado en LLM que responde preguntas sobre documentación interna. Implementado con LangChain, embeddings y una interfaz web minimalista.",
-        category: "ia",
-        tags: ["LangChain", "OpenAI", "Python", "FastAPI"],
-        icon: "🤖",
-        demo: "#",
-        repo: "#"
-      },
-      {
-        title: "Análisis Exploratorio de Ventas E-commerce",
-        description: "Procesamiento de 2M+ registros con Pandas y visualizaciones interactivas en Plotly. Descubrimos patrones de compra que guiaron una campaña con ROI 3.2x.",
-        category: "data",
-        tags: ["Python", "Pandas", "Plotly", "Jupyter"],
-        icon: "🛒",
-        demo: "#",
-        repo: "#"
-      },
-      {
-        title: "Landing Page para Startup de IA",
-        description: "Diseño y desarrollo de una landing de alta conversión con animaciones scroll-triggered, dark mode y formulario conectado a CRM.",
-        category: "webdev",
-        tags: ["React", "Framer Motion", "Tailwind", "HubSpot"],
-        icon: "🚀",
-        demo: "#",
-        repo: "#"
-      }
-    ];
+  {
+    title: "Flora",
+    description: "Proyecto personal alojado en GitHub. [Agregá acá una descripción breve: qué problema resuelve, qué tecnologías usaste y qué resultado obtuviste.]",
+    category: "webdev", // podés cambiarla a "data", "webdesign" o "ia" según corresponda
+    tags: ["GitHub", "JavaScript"], // completá con el stack real
+    icon: "🌿",
+    demo: "", // si tenés una demo online, pegalá el link; si no, dejalo vacío
+    repo: "https://github.com/joaflores03/Flora"
+  },
+  {
+    title: "ClutchLab",
+    description: "Plataforma que analiza demos de CS2 (Premier y FACEIT) con IA. Subís tu archivo .dem, el motor extrae métricas tácticas (opening duels, trade%, KAST, utilidad) y te arma un plan de práctica de 30 minutos con drills concretos en mapas del taller. Sin servidores externos, gratuito y enfocado en el mercado latinoamericano.",
+    category: "ia", // también podría ser "data" o "webdev"
+    tags: ["CS2", "IA", "awpy", "Python", "Análisis de datos"],
+    icon: "🎯",
+    demo: "https://clutchlab.lat",
+    repo: "" // si tenés repo público, pegalo; si no, dejalo vacío
+  }
+];
 
     /* ============================================================
        2. RENDERIZADO Y FILTRADO
